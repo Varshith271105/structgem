@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 
@@ -20,6 +21,7 @@ from chunker import chunk_text
 from llm_engine import extract_topics
 from merger import merge_results
 from structurer import structure_topics
+from pdf_export import generate_pdf
 
 logger = get_logger("main")
 
@@ -33,7 +35,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://structgem-90uuhv6gd-varshith271105s-projects.vercel.app"
+        "http://localhost:5173",
+        "https://structgem-90uuhv6gd-varshith271105s-projects.vercel.app",
+        "https://structgem.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -113,6 +117,31 @@ async def process_syllabus(
     except Exception as e:
         logger.error(f"Unexpected error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
+
+@app.post("/export-pdf")
+async def export_pdf(data: dict):
+    """
+    Generate a PDF from structured topic data.
+    Accepts JSON body: { "topics": [...] }
+    Returns PDF file.
+    """
+    topics = data.get("topics", [])
+    if not topics:
+        raise HTTPException(status_code=400, detail="No topics provided.")
+
+    try:
+        pdf_bytes = generate_pdf(topics)
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": "attachment; filename=syllabus_topics.pdf"
+            },
+        )
+    except Exception as e:
+        logger.error(f"PDF generation error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
 
 
 if __name__ == "__main__":

@@ -384,6 +384,22 @@
   background: rgba(99, 102, 241, 0.1);
 }
 
+.action-btn.pdf-btn {
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #f87171;
+}
+
+.action-btn.pdf-btn:hover {
+  border-color: rgba(220, 38, 38, 0.5);
+  background: rgba(220, 38, 38, 0.08);
+  color: #ef4444;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .results-body {
   padding: 24px 28px;
 }
