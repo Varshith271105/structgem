@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TopicTree from './TopicTree'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || 'https://structgem-production.up.railway.app'
 
 export default function ResultsPanel({ data }) {
   const [viewMode, setViewMode] = useState('structured')
