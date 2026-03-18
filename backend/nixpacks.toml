@@ -1,0 +1,11 @@
+[project]
+name = "structgem-backend"
+
+[nixpacks]
+providers = ["python"]
+
+[phases.setup]
+aptPkgs = []
+
+[phases.install]
+cmds = ["pip install -r requirements.txt"]

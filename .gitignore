@@ -1,0 +1,24 @@
+# Environment & secrets
+.env
+backend/.env
+
+# Logs
+*.log
+backend/logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+venv/
+
+# Node
+node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
