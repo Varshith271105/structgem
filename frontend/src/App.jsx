@@ -3,7 +3,7 @@ import InputPanel from './components/InputPanel'
 import ResultsPanel from './components/ResultsPanel'
 import './App.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = 'structgem-production.up.railway.app'
 
 function App() {
   const [result, setResult] = useState(null)
